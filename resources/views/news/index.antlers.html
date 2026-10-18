@@ -1,0 +1,20 @@
+<div class="shop-head">
+    <div>
+        <p class="eyebrow">From our publishers</p>
+        <h1 class="lede">News</h1>
+        <p class="intro">Gathered from our publishers' RSS feeds every hour.</p>
+    </div>
+</div>
+
+<ul class="listing listing--news">
+    {{ collection:news limit="20" }}
+        <li>
+            {{ if image }}<img src="{{ image:url }}" alt="" loading="lazy">{{ /if }}
+            <div>
+                <p class="eyebrow">{{ date format="j F Y" }}{{ if categories }} · {{ categories | join(', ') }}{{ /if }}</p>
+                <h2><a href="{{ url }}">{{ title }}</a></h2>
+                <p>{{ summary }}</p>
+            </div>
+        </li>
+    {{ /collection:news }}
+</ul>

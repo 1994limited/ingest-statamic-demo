@@ -1,0 +1,34 @@
+title: 'Jobs board'
+source:
+  type: url
+  url: 'https://ingest-statamic-demo.test/feed-lab/jobs/jobs.xml'
+format:
+  type: xml
+  item_path: source/job
+destination:
+  type: entries
+  collection: jobs
+  blueprint: job
+key:
+  - referencenumber
+mapping:
+  title:
+    path: title
+  location:
+    path: city
+  job_type:
+    path: jobtype
+  salary:
+    path: salary
+  closes:
+    path: expirationdate
+  description:
+    path: description
+  apply_url:
+    path: url
+sync:
+  missing:
+    action: unpublish
+schedule:
+  frequency: daily
+  time: '06:00'

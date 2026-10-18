@@ -1,0 +1,4 @@
+title: Authors
+route: '/authors/{slug}'
+template: authors/show
+revisions: false

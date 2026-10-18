@@ -1,0 +1,18 @@
+<div class="shop-head">
+    <div>
+        <p class="eyebrow">Readings, signings and talks</p>
+        <h1 class="lede">Author events</h1>
+        <p class="intro">From our ticketing partner's API, every half hour. Cancelled events disappear on their own.</p>
+    </div>
+</div>
+
+<ul class="listing">
+    {{ collection:events sort="date:asc" }}
+        <li>
+            <p class="eyebrow">{{ date format="l j F, g.ia" }}</p>
+            <h2><a href="{{ url }}">{{ title }}</a></h2>
+            <p>{{ summary }}</p>
+            <p class="meta">{{ venue }}, {{ city }} · {{ if ticket_price > 0 }}£{{ ticket_price | format_number(2) }}{{ else }}Free{{ /if }}{{ if tickets_left === 0 }} · Sold out{{ elseif tickets_left <= 10 }} · {{ tickets_left }} tickets left{{ /if }}</p>
+        </li>
+    {{ /collection:events }}
+</ul>

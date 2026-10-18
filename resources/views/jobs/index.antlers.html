@@ -1,0 +1,16 @@
+<div class="shop-head">
+    <div>
+        <p class="eyebrow">Work with us</p>
+        <h1 class="lede">Jobs</h1>
+        <p class="intro">From our jobs board. A role comes down here as soon as it closes there.</p>
+    </div>
+</div>
+
+<ul class="listing">
+    {{ collection:jobs sort="title" }}
+        <li>
+            <h2><a href="{{ url }}">{{ title }}</a></h2>
+            <p class="meta">{{ location }} · {{ job_type:label }} · {{ salary }}{{ if closes }} · Closes {{ closes format="j F" }}{{ /if }}</p>
+        </li>
+    {{ /collection:jobs }}
+</ul>

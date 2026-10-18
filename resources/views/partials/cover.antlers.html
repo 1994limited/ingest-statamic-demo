@@ -1,0 +1,17 @@
+{{# A book cover: the supplier's image when Ingest has brought one in, otherwise drawn in CSS.
+    link="true" makes it a link to the book; size: small, large, or nothing for the shelf. #}}
+{{ if cover_image && link }}
+    <a href="{{ url }}" class="cover cover--image" aria-label="{{ title }} by {{ byline }}"><img src="{{ cover_image:url }}" alt="" loading="lazy"></a>
+{{ elseif cover_image }}
+    <img class="cover cover--image{{ if size }} cover--{{ size }}{{ /if }}" src="{{ cover_image:url }}" alt="{{ cover_image:alt ?? title }}">
+{{ elseif link }}
+    <a href="{{ url }}" class="cover cover--{{ cover_style }}" style="--cover: {{ cover ?? '#3E5C76' }}; --cover-ink: {{ cover_ink ?? '#F5F6F3' }}" aria-label="{{ title }} by {{ byline }}">
+        <span class="cover__title">{{ title }}</span>
+        <span class="cover__author">{{ byline }}</span>
+    </a>
+{{ else }}
+    <div class="cover cover--{{ cover_style }}{{ if size }} cover--{{ size }}{{ /if }}" style="--cover: {{ cover ?? '#3E5C76' }}; --cover-ink: {{ cover_ink ?? '#F5F6F3' }}" aria-hidden="true">
+        <span class="cover__title">{{ title }}</span>
+        <span class="cover__author">{{ byline }}</span>
+    </div>
+{{ /if }}

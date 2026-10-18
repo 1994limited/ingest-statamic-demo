@@ -1,0 +1,21 @@
+title: Event
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: title, field: { type: text, required: true, display: Title } }
+          - { handle: summary, field: { type: textarea, display: Summary } }
+          - { handle: ends_at, field: { type: date, display: Ends, time_enabled: true, width: 50 } }
+          - { handle: venue, field: { type: text, display: Venue, width: 50 } }
+          - { handle: city, field: { type: text, display: Town, width: 33 } }
+          - { handle: ticket_price, field: { type: float, display: 'Ticket price (£)', width: 33 } }
+          - { handle: tickets_left, field: { type: integer, display: 'Tickets left', width: 33 } }
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          - { handle: slug, field: { type: slug } }
+          - { handle: date, field: { type: date, display: Starts, time_enabled: true, required: true } }

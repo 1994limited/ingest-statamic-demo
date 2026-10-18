@@ -1,0 +1,4 @@
+title: Jobs
+route: '/jobs/{slug}'
+template: jobs/show
+revisions: false

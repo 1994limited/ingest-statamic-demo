@@ -1,0 +1,123 @@
+{{#
+    @name Address
+    @desc Renders address form fields.
+    @param* type The type of address. Options: shipping, billing.
+    @param countries Limit the available countries by providing a pipe-separated list of ISO3 country codes (eg GBR|IRL).
+    @param default_country The ISO3 code of the country to pre-select (eg. GBR).
+#}}
+
+<div x-data="{{ type | ucfirst }}Address" class="flex flex-col space-y-6">
+    {{ partial:checkout/components/combobox
+        name="{type}_address[country]"
+        label="Country"
+        autocomplete="{type} country"
+        required="true"
+        model="country"
+        options="countries"
+        value_key="value"
+        display_key="label"
+        placeholder="Select a country"
+    }}
+
+    {{ partial:checkout/components/input
+        name="{type}_address[name]"
+        label="{type | ucfirst} Name"
+        type="text"
+        xBindValue="cart.{type}_address?.name || cart.customer?.name"
+        autocomplete="{type} name"
+        required="true"
+    }}
+
+    {{ partial:checkout/components/input
+        name="{type}_address[line_1]"
+        label="{type | ucfirst} Line 1"
+        type="text"
+        xBindValue="cart.{type}_address?.line_1"
+        autocomplete="{type} address-line1"
+        required="true"
+    }}
+
+    {{ partial:checkout/components/input
+        name="{type}_address[line_2]"
+        label="{type | ucfirst} Line 2"
+        type="text"
+        xBindValue="cart.{type}_address?.line_2"
+        autocomplete="{type} address-line2"
+    }}
+
+    <div class="grid sm:grid-cols-2 gap-6">
+        {{ partial:checkout/components/input
+            name="{type}_address[city]"
+            label="Town/City"
+            type="text"
+            xBindValue="cart.{type}_address?.city"
+            autocomplete="{type} address-level1"
+            required="true"
+        }}
+
+        {{ partial:checkout/components/input
+            name="{type}_address[postcode]"
+            label="Postcode"
+            type="text"
+            xBindValue="cart.{type}_address?.postcode"
+            autocomplete="{type} postal-code"
+            required="true"
+        }}
+    </div>
+
+    <template x-if="states.length">
+        {{ partial:checkout/components/combobox
+            name="{type}_address[state]"
+            label="State/County"
+            autocomplete="{type} address-level1"
+            required="true"
+            model="state"
+            options="states"
+            value_key="code"
+            display_key="name"
+            placeholder="Select a state"
+        }}
+    </template>
+</div>
+
+{{ push:footer_scripts }}
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('{{ type | ucfirst }}Address', () => ({
+                country: null,
+                state: null,
+                countries: [
+                    {{ dictionary:countries emojis="false" value:in="{countries}" }}
+                        { value: {{ value | to_json }}, label: {{ label | to_json }} },
+                    {{ /dictionary:countries }}
+                ],
+                states: [],
+
+                init() {
+                    this.country = this.cart.{{ type }}_address?.country?.value || '{{ default_country }}';
+
+                    if (!this.country && this.countries.length === 1) {
+                        this.country = this.countries[0].value;
+                    }
+
+                    this.state = this.cart.{{ type }}_address?.state?.code;
+
+                    if (this.country) this.fetchStates();
+
+                    this.$watch('country', () => {
+                        this.state = null;
+                        this.fetchStates();
+                    });
+                },
+
+                fetchStates() {
+                    this.states = [];
+
+                    fetch(`{{ route:statamic.cargo.states }}?country=${this.country}`)
+                        .then(response => response.json())
+                        .then(data => this.states = data);
+                },
+            }));
+        });
+    </script>
+{{ /push:footer_scripts }}

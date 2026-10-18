@@ -1,0 +1,24 @@
+title: 'Opening hours'
+source:
+  type: url
+  url: 'https://ingest-statamic-demo.test/feed-lab/settings/opening-hours.json'
+destination:
+  type: globals
+  set: shop
+mapping:
+  phone:
+    path: phone
+  notice:
+    path: notice
+  hours:
+    path: hours
+    fields:
+      day:
+        path: day
+      opens:
+        path: opens
+      closes:
+        path: closes
+schedule:
+  frequency: daily
+  time: '05:30'

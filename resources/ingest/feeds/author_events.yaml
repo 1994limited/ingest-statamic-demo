@@ -1,0 +1,48 @@
+title: 'Author events'
+source:
+  type: url
+  url: 'https://ingest-statamic-demo.test/feed-lab/api/events'
+  auth:
+    type: bearer
+    token: 'env:FEED_LAB_TOKEN'
+  pagination:
+    type: cursor
+    path: next_cursor
+    param: cursor
+format:
+  type: json
+  item_path: events
+destination:
+  type: entries
+  collection: events
+  blueprint: event
+key:
+  - id
+filters:
+  -
+    path: status
+    op: not_equals
+    value: cancelled
+mapping:
+  title:
+    path: name
+  summary:
+    path: summary
+  date:
+    path: starts_at
+  ends_at:
+    path: ends_at
+  venue:
+    path: venue.name
+  city:
+    path: venue.city
+  ticket_price:
+    path: tickets.price
+  tickets_left:
+    path: tickets.available
+sync:
+  missing:
+    action: unpublish
+schedule:
+  frequency: minutes
+  every: 30

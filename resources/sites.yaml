@@ -1,0 +1,6 @@
+default:
+  name: 'Dog-ear Books'
+  url: /
+  locale: en_GB
+  attributes:
+    currency: GBP

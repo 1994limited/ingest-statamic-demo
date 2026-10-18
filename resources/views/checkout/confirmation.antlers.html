@@ -1,0 +1,68 @@
+{{ orders :id:is="get:order_id" }}
+    {{#
+        We need to pass the summary total here manually, since there's no "cart" object in the Alpine.js data.
+        This total is displayed in the cart summary section on mobile.
+    #}}
+    {{ section:summary_total }}
+        <span class="font-bold">{{ grand_total }}</span>
+    {{ /section:summary_total }}
+
+    <div>
+        <div class="mb-12">
+            <h1 class="text-2xl font-semibold text-gray-900 mb-4">{{ 'Thanks for your order!' | trans }}</h1>
+            <p class="mb-4">{{ trans key="Your order number is :orderNumber." orderNumber="<strong>#{order_number}</strong>" }} {{ trans key="We'll send you a confirmation email once we've finished processing your payment." }}</p>
+
+            <a class="text-secondary hover:text-secondary/90 font-medium" href="{{ link to="/" }}">→ {{ 'Go to the homepage' | trans }}</a>
+        </div>
+
+        <div class="bg-white p-6 border border-gray-200 rounded-lg mb-6">
+            <span class="block text-sm mb-2 text-gray-600 uppercase font-medium">{{ 'Customer' | trans }}</span>
+            <p>
+                {{ customer:name }}<br>
+                {{ customer:email }}
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 bg-white p-6 rounded-lg border border-gray-200 mb-6">
+            {{ if shipping_address:line_1 }}
+                <div>
+                    <span class="block text-sm mb-2 text-gray-600 uppercase font-medium">{{ 'Shipping address' | trans }}</span>
+                    <address>
+                        {{ shipping_address:line_1 }}<br>
+                        {{ if shipping_address:line_2 }}{{ shipping_address:line_2 }}<br>{{ /if }}
+                        {{ shipping_address:city }}, {{ shipping_address:postcode }}<br>
+                        {{ if shipping_address:state }}{{ shipping_address:state:name }}<br>{{ /if }}
+                        {{ shipping_address:country }}
+                    </address>
+                </div>
+            {{ /if }}
+            <div>
+                <span class="block text-sm mb-2 text-gray-600 uppercase font-medium">{{ 'Billing address' | trans }}</span>
+                <address>
+                    {{ billing_address:line_1 }}<br>
+                    {{ if billing_address:line_2 }}{{ billing_address:line_2 }}<br>{{ /if }}
+                    {{ billing_address:city }}, {{ billing_address:postcode }}<br>
+                    {{ if billing_address:state }}{{ billing_address:state:name }}<br>{{ /if }}
+                    {{ billing_address:country }}
+                </address>
+            </div>
+        </div>
+
+        {{ if downloads }}
+            <div class="bg-white p-6 border border-gray-200 rounded-lg mb-6">
+                <span class="block text-sm mb-2 text-gray-600 uppercase font-medium">{{ 'Downloads' | trans }}</span>
+                <ul class="list-disc pl-4">
+                    {{ downloads }}
+                        <li>
+                            <a class="text-secondary hover:text-secondary/90 font-medium" href="{{ download_url }}" download>{{ product:title }}</a>
+                        </li>
+                    {{ /downloads }}
+                </ul>
+            </div>
+        {{ /if }}
+    </div>
+
+    {{ section:sidebar }}
+        {{ partial:checkout/components/order_summary }}
+    {{ /section:sidebar }}
+{{ /orders }}

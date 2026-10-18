@@ -1,0 +1,77 @@
+<article class="book-page">
+    <div class="book">
+        {{ partial:cover size="large" }}
+    </div>
+
+    <div>
+        <p class="eyebrow"><a href="/">Shelves</a></p>
+        <h1>{{ title }}</h1>
+        <p class="by">by {{ if authors }}{{ authors }}<a href="{{ url }}">{{ title }}</a>{{ unless last }}, {{ /unless }}{{ /authors }}{{ else }}{{ byline }}{{ /if }}</p>
+        {{ if description }}<div class="blurb">{{ description }}</div>{{ else }}<p class="blurb">{{ blurb }}</p>{{ /if }}
+
+        {{ cart:add class="buy" redirect="{{ url }}" }}
+            {{ if product_variants:options }}
+                <fieldset class="editions">
+                    <legend>Edition</legend>
+                    {{ product_variants:options }}
+                        <label class="edition">
+                            <input type="radio" name="variant" value="{{ key }}" {{ if stock === 0 }}data-sold-out{{ /if }}>
+                            <span>{{ variant }}</span>
+                            <span class="price">{{ price }}</span>
+                            <span class="meta">{{ if stock === 0 }}Sold out{{ elseif stock <= 3 }}{{ stock }} left{{ /if }}</span>
+                        </label>
+                    {{ /product_variants:options }}
+                </fieldset>
+            {{ else }}
+                <p class="buy__price">
+                    <span class="price">{{ price }}</span>
+                    <span class="meta">{{ if stock === 0 }}Sold out{{ elseif stock <= 3 }}{{ stock }} left{{ /if }}</span>
+                </p>
+            {{ /if }}
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="button" {{ if stock === 0 }}disabled{{ /if }} data-buy>
+                {{ if stock === 0 }}Sold out{{ else }}Add to basket{{ /if }}
+            </button>
+        {{ /cart:add }}
+
+        <dl class="details">
+            {{ if publisher }}<dt>Publisher</dt><dd>{{ publisher }}</dd>{{ /if }}
+            {{ if pages }}<dt>Pages</dt><dd>{{ pages }}</dd>{{ /if }}
+            {{ if published_on }}<dt>Published</dt><dd>{{ published_on format="j F Y" }}</dd>{{ /if }}
+            {{ if isbn }}<dt>ISBN</dt><dd>{{ isbn }}</dd>{{ /if }}
+            {{ if subjects }}<dt>Subjects</dt><dd>{{ subjects }}{{ title }}{{ unless last }}, {{ /unless }}{{ /subjects }}</dd>{{ /if }}
+        </dl>
+
+        {{ ingest:source }}
+            <p class="meta synced">From our supplier's catalogue{{ if last_synced }}, checked {{ last_synced | relative }}{{ /if }}.</p>
+        {{ /ingest:source }}
+    </div>
+</article>
+
+
+<script>
+    // Sold-out editions can be chosen, to ask about them: the basket button
+    // says so, and the Back in Stock form below shows for that edition.
+    var buy = document.querySelector('[data-buy]');
+
+    function chooseEdition() {
+        var chosen = document.querySelector('.buy input[name="variant"]:checked');
+        if (!chosen) return;
+        var soldOut = chosen.hasAttribute('data-sold-out');
+        buy.disabled = soldOut;
+        buy.textContent = soldOut ? 'Sold out' : 'Add to basket';
+    }
+
+    document.addEventListener('change', function (event) {
+        if (event.target.name === 'variant' && event.target.closest('.buy')) chooseEdition();
+    });
+
+    // Start on the first edition in stock.
+    var first = document.querySelector('.buy input[name="variant"]:checked')
+        || document.querySelector('.buy input[name="variant"]:not([data-sold-out])')
+        || document.querySelector('.buy input[name="variant"]');
+    if (first) {
+        first.checked = true;
+        chooseEdition();
+    }
+</script>

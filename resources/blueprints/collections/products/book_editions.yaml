@@ -1,0 +1,42 @@
+title: 'Book with editions'
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: title, field: { type: text, required: true, display: Title } }
+          - { handle: byline, field: { type: text, display: Author } }
+          - { handle: blurb, field: { type: textarea, display: Blurb } }
+          - { handle: description, field: { type: bard, display: Description, buttons: [bold, italic, anchor, unorderedlist, orderedlist] } }
+          - { handle: authors, field: { type: entries, display: Authors, collections: [authors] } }
+          - { handle: subjects, field: { type: terms, display: Subjects, taxonomies: [subjects] } }
+      -
+        display: 'Price and stock'
+        instructions: 'Each edition (hardback, paperback) has its own price and stock.'
+        fields:
+          - handle: product_variants
+            field:
+              type: product_variants
+              display: Editions
+              option_fields:
+                - { handle: stock, field: { type: integer, display: Stock, instructions: 'Leave empty if you don''t count it.' } }
+                - { handle: sku, field: { type: text, display: SKU } }
+      -
+        display: Cover
+        fields:
+          - { handle: cover, field: { type: color, display: 'Cover colour', width: 33 } }
+          - { handle: cover_ink, field: { type: color, display: 'Title colour', width: 33 } }
+          - { handle: cover_style, field: { type: select, display: 'Cover style', width: 33, options: { serif: Serif, block: Block, stripe: Stripe } } }
+          - { handle: cover_image, field: { type: assets, display: 'Cover image', container: assets, max_files: 1, instructions: 'From the supplier feed. Shown instead of the coloured cover.' } }
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          - { handle: slug, field: { type: slug } }
+          - { handle: isbn, field: { type: text, display: ISBN } }
+          - { handle: publisher, field: { type: text, display: Publisher } }
+          - { handle: pages, field: { type: integer, display: Pages } }
+          - { handle: published_on, field: { type: date, display: 'Published' } }
+          - { handle: tax_class, field: { type: tax_classes, display: 'Tax class', max_items: 1 } }

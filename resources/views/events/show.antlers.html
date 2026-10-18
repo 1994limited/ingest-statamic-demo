@@ -1,0 +1,6 @@
+<article class="prose-page">
+    <p class="eyebrow"><a href="/events">Events</a> · {{ date format="l j F Y, g.ia" }}{{ if ends_at }}–{{ ends_at format="g.ia" }}{{ /if }}</p>
+    <h1>{{ title }}</h1>
+    <p class="intro">{{ summary }}</p>
+    <p class="meta">{{ venue }}, {{ city }} · {{ if ticket_price > 0 }}£{{ ticket_price | format_number(2) }}{{ else }}Free{{ /if }} · {{ tickets_left }} tickets left</p>
+</article>

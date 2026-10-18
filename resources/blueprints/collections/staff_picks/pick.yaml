@@ -1,0 +1,13 @@
+title: 'Staff pick'
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: title, field: { type: text, required: true, display: Title } }
+          - { handle: book, field: { type: entries, display: Book, collections: [products], max_items: 1 } }
+          - { handle: reason, field: { type: textarea, display: 'Why we love it' } }
+          - { handle: staff, field: { type: text, display: 'Chosen by', width: 33 } }
+          - { handle: featured, field: { type: toggle, display: Featured, width: 33 } }
+          - { handle: order, field: { type: integer, display: Order, width: 33 } }

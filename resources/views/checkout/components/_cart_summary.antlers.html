@@ -1,0 +1,184 @@
+{{#
+    @name Cart Summary
+    @desc Renders the cart summary on the checkout page.
+#}}
+
+<template x-if="cart">
+    <div class="p-8 flex flex-col space-y-6 text-sm" aria-label="{{ 'Order summary' | trans }}" role="region" aria-live="polite">
+        <ul class="flex flex-col space-y-6">
+            {{ cart:line_items }}
+                <li class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        {{ if product:image }}
+                            <a href="{{ product:url }}" target="_blank">
+                                <picture>
+                                    <source srcset="{{ glide :src="product:image" square="64" format="webp" }}" type="image/webp">
+                                    <img src="{{ glide :src="product:image" square="64" }}" alt="{{ product:title }}" class="w-16 h-16 rounded-md mr-2 hover:overflow-hidden hover:scale-[1.05] transition">
+                                </picture>
+                            </a>
+                        {{ /if }}
+                        {{ if variant:image }}
+                            <a href="{{ product:url }}" target="_blank">
+                                <picture>
+                                    <source srcset="{{ glide :src="variant:image" square="64" format="webp" }}" type="image/webp">
+                                    <img src="{{ glide :src="variant:image" square="64" }}" alt="{{ variant:title }}" class="w-16 h-16 rounded-md mr-2 hover:overflow-hidden hover:scale-[1.05] transition">
+                                </picture>
+                            </a>
+                        {{ /if }}
+                        <div class="flex flex-col space-y-0.5">
+                            <a href="{{ product:url }}" target="_blank" class="block font-semibold">{{ product:title }}</a>
+                            {{ if variant }}
+                                <span class="text-xs text-gray-500">{{ variant:name }}</span>
+                            {{ /if }}
+                            <span class="text-xs text-gray-500">{{ 'Quantity' | trans }}: {{ quantity }}</span>
+                        </div>
+                    </div>
+
+                    <span>{{ sub_total }}</span>
+                </li>
+            {{ /cart:line_items }}
+        </ul>
+
+        <template x-if="!cart.discount_code && !cart.is_free">
+            {{ cart:update x-data="ApplyDiscountCodeForm" @submit.prevent="applyDiscountCode" }}
+                <label for="discount_code" class="sr-only">{{ 'Discount code' | trans }}</label>
+                <div class="flex items-center">
+                    <input
+                        type="text"
+                        id="discount_code"
+                        name="discount_code"
+                        placeholder="{{ 'Discount code' | trans }}"
+                        x-model="discountCode"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+                        autocomplete="off"
+                        :aria-invalid="error ? 'true' : 'false'"
+                        :aria-describedby="error ? 'discount-code-error' : null"
+                    >
+                    <button
+                        type="submit"
+                        class="ml-4 h-full rounded-md border border-transparent bg-secondary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500"
+                        :disabled="!discountCode || busy"
+                    >
+                        {{ 'Apply' | trans }}
+                    </button>
+                </div>
+
+                <template x-if="error">
+                    <p id="discount-code-error" class="text-red-600 text-sm mt-1" x-text="error" role="alert" aria-live="assertive"></p>
+                </template>
+            {{ /cart:update }}
+        </template>
+
+        <div class="flex items-center justify-between">
+            <span>{{ 'Subtotal' | trans }}</span>
+            <span x-text="cart.sub_total"></span>
+        </div>
+
+        {{ if {cart:has_physical_products} }}
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-1">
+                    <span>{{ 'Shipping' | trans }}</span>
+                    <template x-if="cart.shipping_option">
+                        <span class="text-xs text-gray-500" x-text="`(${cart.shipping_option.name})`"></span>
+                    </template>
+                </div>
+
+                <template x-if="cart.shipping_option">
+                    <span x-text="cart.shipping_option.price"></span>
+                </template>
+
+                <template x-if="!cart.shipping_option">
+                    <span class="text-gray-500">{{ 'Enter shipping address' | trans }}</span>
+                </template>
+            </div>
+        {{ /if }}
+
+        <template x-if="cart.discounts.length">
+            <template x-for="discount in cart.discounts" :key="discount.id">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-1">
+                        <span>{{ 'Discount' | trans }}</span>
+                        <span class="text-xs text-gray-500" x-text="`(${discount.discount_code ?? discount.title})`"></span>
+                        <template x-if="discount.discount_code !== null">
+                            {{ cart:update class="flex items-center" x-data="RemoveDiscountCodeForm" @submit.prevent="removeDiscountCode" }}
+                                <input type="hidden" name="discount_code" value="">
+
+                                <button class="text-xs text-gray-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-1 rounded" title="{{ 'Remove discount code' | trans }}" aria-label="{{ 'Remove discount code' | trans }}">
+                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            {{ /cart:update }}
+                        </template>
+                    </div>
+                    <span x-text="`-${discount.amount}`"></span>
+                </div>
+            </template>
+        </template>
+
+        {{ if !config:statamic:cargo:taxes:price_includes_tax }}
+            <div class="flex items-center justify-between">
+                <span>{{ 'Taxes' | trans }}</span>
+                <span x-text="cart.tax_total"></span>
+            </div>
+        {{ /if }}
+
+        <div>
+            <div class="flex items-center justify-between font-bold text-lg">
+                <span>{{ 'Total' | trans }}</span>
+                <span x-text="`{{ site:attributes:currency | upper }} ${cart.grand_total}`"></span>
+            </div>
+
+            {{ if config:statamic:cargo:taxes:price_includes_tax }}
+                <div class="mt-1 text-xs font-normal text-gray-500">
+                    {{ trans key="Including :amount in taxes" amount="<span x-text='cart.tax_total'></span>" }}
+                </div>
+            {{ /if }}
+        </div>
+    </div>
+</template>
+
+{{ push:footer_scripts }}
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('ApplyDiscountCodeForm', () => ({
+            discountCode: null,
+            busy: false,
+            error: null,
+
+            async applyDiscountCode(e) {
+                e.preventDefault();
+
+                this.busy = true;
+                this.error = null;
+
+                await this.submit(this.$root)
+                    .then(data => this.discountCode = null)
+                    .catch(error => {
+                        if (error.status === 422) {
+                            error.json().then(data => {
+                                this.error = data.message;
+                            });
+
+                            return;
+                        }
+
+                        alert(`Something went wrong while redeeming the discount code. Please try again later.`);
+                    })
+                    .finally(() => this.busy = false);
+            },
+        }));
+
+        Alpine.data('RemoveDiscountCodeForm', () => ({
+            async removeDiscountCode(e) {
+                e.preventDefault();
+
+                await this.submit(this.$root)
+                    .catch(error => {
+                        alert(`Something went wrong while removing the discount code. Please try again later.`);
+                    });
+            },
+        }));
+    });
+</script>
+{{ /push:footer_scripts }}

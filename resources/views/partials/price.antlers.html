@@ -1,0 +1,6 @@
+{{# A book's price: one price, or each edition's. #}}
+{{ if product_variants:options }}
+    <span class="price">{{ product_variants:options }}{{ price }}{{ unless last }} / {{ /unless }}{{ /product_variants:options }}</span>
+{{ else }}
+    <span class="price">{{ price }}</span>
+{{ /if }}

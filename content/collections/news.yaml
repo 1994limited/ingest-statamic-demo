@@ -1,0 +1,9 @@
+title: News
+route: '/news/{slug}'
+template: news/show
+date: true
+date_behavior:
+  past: public
+  future: private
+sort_dir: desc
+revisions: false

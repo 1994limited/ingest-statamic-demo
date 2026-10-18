@@ -1,0 +1,93 @@
+title: 'Supplier catalogue'
+source:
+  url: 'https://ingest-statamic-demo.test/feed-lab/supplier/books'
+  headers:
+    Accept: application/json
+  pagination:
+    type: page
+    param: page
+    last_page_path: meta.last_page
+  query: {  }
+  auth:
+    type: none
+format:
+  type: json
+  item_path: data
+filters:
+  -
+    path: status
+    op: equals
+    value: live
+destination:
+  type: cargo_products
+  collection: products
+  blueprint: book_editions
+  tax_class: general
+key:
+  - isbn
+sync:
+  missing:
+    action: unpublish
+  local_edits: keep
+mapping:
+  title:
+    path: title
+  isbn:
+    path: isbn
+  byline:
+    path: 'contributors.*.name'
+    transforms:
+      - first
+  authors:
+    path: 'contributors.*.name'
+    match: title
+    create: true
+  subjects:
+    path: subjects
+    match: title
+    create: true
+  publisher:
+    path: publisher
+  pages:
+    path: pages
+  published_on:
+    path: published
+  description:
+    path: description_html
+  blurb:
+    path: description_html
+    transforms:
+      - text
+      -
+        name: truncate
+        args:
+          - 160
+  cover_image:
+    path: cover
+    folder: 'covers/{isbn}'
+    alt: title
+    transforms:
+      -
+        name: absolute_url
+        args:
+          - 'https://ingest-statamic-demo.test/feed-lab/'
+  product_variants:
+    path: formats
+    dimensions:
+      -
+        name: Edition
+        path: binding
+    sku: sku
+    price:
+      path: price
+      create_only: true
+    stock:
+      path: stock
+      create_only: true
+schedule:
+  frequency: hourly
+  minute: 5
+then_run:
+  - staff_picks
+notify:
+  stale_after_hours: 26

@@ -1,0 +1,35 @@
+title: 'Publisher news'
+source:
+  type: url
+  url: 'https://ingest-statamic-demo.test/feed-lab/news/rss.xml'
+destination:
+  type: entries
+  collection: news
+  blueprint: post
+key:
+  - _feed.id
+mapping:
+  title:
+    path: _feed.title
+  date:
+    path: _feed.date
+  summary:
+    path: _feed.summary
+  body:
+    path: _feed.content
+  source_link:
+    path: _feed.link
+  by:
+    path: _feed.author
+  categories:
+    path: _feed.categories
+  image:
+    path: _feed.image
+    folder: news
+    transforms:
+      -
+        name: absolute_url
+        args: ['https://ingest-statamic-demo.test/feed-lab/']
+schedule:
+  frequency: hourly
+  minute: 20

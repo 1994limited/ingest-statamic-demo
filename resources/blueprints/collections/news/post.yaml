@@ -1,0 +1,21 @@
+title: Post
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: title, field: { type: text, required: true, display: Title } }
+          - { handle: summary, field: { type: textarea, display: Summary } }
+          - { handle: body, field: { type: bard, display: Body, buttons: [bold, italic, anchor, h2, h3, unorderedlist, quote] } }
+          - { handle: image, field: { type: assets, display: Image, container: assets, max_files: 1 } }
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          - { handle: slug, field: { type: slug } }
+          - { handle: date, field: { type: date, display: Date, time_enabled: true } }
+          - { handle: source_link, field: { type: text, display: 'Original post' } }
+          - { handle: by, field: { type: text, display: Author } }
+          - { handle: categories, field: { type: list, display: Categories } }

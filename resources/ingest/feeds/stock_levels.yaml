@@ -1,0 +1,19 @@
+title: 'Stock and prices'
+source:
+  type: url
+  url: 'https://ingest-statamic-demo.test/feed-lab/supplier/stock.csv'
+format:
+  type: csv
+destination:
+  type: cargo_stock
+  collection: products
+key:
+  - sku
+mapping:
+  price:
+    path: price
+  stock:
+    path: stock
+schedule:
+  frequency: minutes
+  every: 15

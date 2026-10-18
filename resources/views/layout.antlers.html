@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ segment_1 ? '{title} · Dog-ear Books' : 'Dog-ear Books' }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Atkinson+Hyperlegible:wght@400;700&family=Gloock&family=IBM+Plex+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/css/dogear.css">
+</head>
+<body>
+    <header class="masthead">
+        <div class="wrap">
+            <a class="wordmark" href="/">Dog-ear Books</a>
+            <nav class="nav" aria-label="Main">
+                <a href="/" {{ if segment_1 === '' or segment_1 === 'products' }}aria-current="page"{{ /if }}>Shelves</a>
+                <a href="/events" {{ if segment_1 === 'events' }}aria-current="page"{{ /if }}>Events</a>
+                <a href="/news" {{ if segment_1 === 'news' }}aria-current="page"{{ /if }}>News</a>
+                <a href="/jobs" {{ if segment_1 === 'jobs' }}aria-current="page"{{ /if }}>Jobs</a>
+                <a class="saved" href="/checkout">
+                    Basket <span class="count">{{ if {cart:is_empty} }}0{{ else }}{{ cart }}{{ line_items | length }}{{ /cart }}{{ /if }}</span>
+                </a>
+                {{ if logged_in }}
+                    <span class="who">{{ current_user:name }}</span>
+                {{ else }}
+                    <a href="/login">Sign in</a>
+                {{ /if }}
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        {{ get_errors:all }}{{ messages }}<p class="flash">{{ message }}</p>{{ /messages }}{{ /get_errors:all }}
+        {{ template_content }}
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            {{ shop }}
+                <p><strong>Dog-ear Books</strong> · {{ phone }}{{ if notice }} · {{ notice }}{{ /if }}</p>
+                {{ if hours }}
+                    <ul class="hours">
+                        {{ hours }}<li><span>{{ day }}</span> {{ if opens }}{{ opens }}–{{ closes }}{{ else }}Closed{{ /if }}</li>{{ /hours }}
+                    </ul>
+                {{ /if }}
+            {{ /shop }}
+            <p class="meta">A demo of <a href="https://github.com/1994limited/ingest-statamic">Ingest for Statamic</a>. Everything here is made up.</p>
+        </div>
+    </footer>
+</body>
+</html>

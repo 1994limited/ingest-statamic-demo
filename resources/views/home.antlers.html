@@ -1,0 +1,39 @@
+<div class="shop-head">
+    <div>
+        <p class="eyebrow">Kept in step with our suppliers</p>
+        <h1 class="lede">New in, <em>every hour.</em></h1>
+        <p class="intro">Our catalogue, stock, author events, news and jobs all arrive from feeds. Ingest brings them in on a schedule, changes only what changed, and lets us preview and undo every run.</p>
+    </div>
+    {{ ingest:feed handle="stock_levels" }}
+        {{ if last_synced }}<p class="hint">Stock checked {{ last_synced | relative }}.</p>{{ /if }}
+    {{ /ingest:feed }}
+</div>
+
+{{ collection:staff_picks featured:is="true" limit="3" as="picks" }}
+    {{ if picks }}
+        <section class="picks" aria-label="Staff picks">
+            <h2 class="section-title">Staff picks</h2>
+            <ul>
+                {{ picks }}
+                    <li>
+                        {{ book }}<a href="{{ url }}">{{ title }}</a>{{ /book }}
+                        <p>“{{ reason }}”</p>
+                        <p class="meta">— {{ staff }}</p>
+                    </li>
+                {{ /picks }}
+            </ul>
+        </section>
+    {{ /if }}
+{{ /collection:staff_picks }}
+
+<ul class="shelf">
+    {{ collection:products sort="title" }}
+        <li class="book">
+            {{ partial:cover link="true" }}
+            <div class="shelf__caption">
+                <a href="{{ url }}">{{ title }}</a>
+                <span class="meta"><span>{{ byline }}</span>{{ partial:price }}</span>
+            </div>
+        </li>
+    {{ /collection:products }}
+</ul>

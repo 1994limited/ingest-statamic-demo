@@ -1,0 +1,7 @@
+<article class="prose-page">
+    <p class="eyebrow"><a href="/jobs">Jobs</a> · {{ location }} · {{ job_type:label }}</p>
+    <h1>{{ title }}</h1>
+    <p class="meta">{{ salary }}{{ if closes }} · Closes {{ closes format="j F Y" }}{{ /if }}</p>
+    <div class="body">{{ description }}</div>
+    {{ if apply_url }}<p><a class="button" href="{{ apply_url }}" rel="noopener">Apply</a></p>{{ /if }}
+</article>

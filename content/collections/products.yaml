@@ -1,0 +1,5 @@
+title: Books
+template: products/show
+revisions: false
+entry_class: DuncanMcClean\Cargo\Products\Product
+route: '/products/{slug}'

@@ -1,0 +1,9 @@
+title: Events
+route: '/events/{slug}'
+template: events/show
+date: true
+date_behavior:
+  past: private
+  future: public
+sort_dir: asc
+revisions: false

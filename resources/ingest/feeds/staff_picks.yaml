@@ -1,0 +1,29 @@
+title: 'Staff picks (Google Sheet)'
+source:
+  type: url
+  url: 'https://ingest-statamic-demo.test/feed-lab/sheets/staff-picks.csv'
+format:
+  type: csv
+destination:
+  type: entries
+  collection: staff_picks
+  blueprint: pick
+key:
+  - ISBN
+mapping:
+  title:
+    template: '{Staff member} picks {ISBN}'
+  book:
+    path: ISBN
+    match: isbn
+  reason:
+    path: 'Why we love it'
+  staff:
+    path: 'Staff member'
+  featured:
+    path: 'Featured?'
+  order:
+    path: Order
+sync:
+  missing:
+    action: delete

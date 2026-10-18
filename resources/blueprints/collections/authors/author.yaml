@@ -1,0 +1,15 @@
+title: Author
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: title, field: { type: text, required: true, display: Name } }
+          - { handle: bio, field: { type: textarea, display: Bio } }
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          - { handle: slug, field: { type: slug } }

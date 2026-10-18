@@ -1,0 +1,20 @@
+title: Job
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: title, field: { type: text, required: true, display: Title } }
+          - { handle: location, field: { type: text, display: Location, width: 50 } }
+          - { handle: job_type, field: { type: select, display: 'Hours', width: 50, options: { full_time: 'Full time', part_time: 'Part time', seasonal: Seasonal } } }
+          - { handle: salary, field: { type: text, display: Salary, width: 50 } }
+          - { handle: closes, field: { type: date, display: 'Closing date', width: 50 } }
+          - { handle: description, field: { type: bard, display: Description, buttons: [bold, italic, unorderedlist] } }
+          - { handle: apply_url, field: { type: text, display: 'Apply at' } }
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          - { handle: slug, field: { type: slug } }

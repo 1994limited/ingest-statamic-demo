@@ -1,0 +1,18 @@
+title: Shop
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          - { handle: phone, field: { type: text, display: Phone } }
+          - { handle: notice, field: { type: text, display: Notice } }
+          - handle: hours
+            field:
+              type: grid
+              display: 'Opening hours'
+              mode: table
+              fields:
+                - { handle: day, field: { type: text, display: Day } }
+                - { handle: opens, field: { type: time, display: Opens } }
+                - { handle: closes, field: { type: time, display: Closes } }
