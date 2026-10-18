@@ -4,23 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07721e2ca3af3e4a308da5e1ba85ffec",
+    "content-hash": "f8c4fed9838be315c3156d10851996b7",
     "packages": [
         {
             "name": "1994/ingest-statamic",
-            "version": "dev-main",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/1994limited/ingest-statamic.git",
-                "reference": "b20ad92691514f584d332ab2f5feed0fda0c45b2"
+                "reference": "272da7082e71db7f79fd55bdcde9c0e76c65c592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/1994limited/ingest-statamic/zipball/b20ad92691514f584d332ab2f5feed0fda0c45b2",
-                "reference": "b20ad92691514f584d332ab2f5feed0fda0c45b2",
+                "url": "https://api.github.com/repos/1994limited/ingest-statamic/zipball/272da7082e71db7f79fd55bdcde9c0e76c65c592",
+                "reference": "272da7082e71db7f79fd55bdcde9c0e76c65c592",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-fileinfo": "*",
                 "ext-xmlreader": "*",
                 "halaxa/json-machine": "^1.2",
                 "league/html-to-markdown": "^5.1",
@@ -40,19 +43,18 @@
             "suggest": {
                 "duncanmcclean/statamic-cargo": "Sync products, variants, prices and stock into Cargo (^1.15)."
             },
-            "default-branch": true,
             "type": "statamic-addon",
             "extra": {
-                "statamic": {
-                    "name": "Ingest",
-                    "description": "Keep Statamic in sync with external feeds: JSON, XML, RSS, CSV, APIs and Google Sheets, on a schedule, with dry runs and undo.",
-                    "developer": "1994",
-                    "developer-url": "https://1994.co.uk"
-                },
                 "laravel": {
                     "providers": [
                         "NineteenNinetyFour\\Ingest\\ServiceProvider"
                     ]
+                },
+                "statamic": {
+                    "name": "Ingest",
+                    "developer": "1994",
+                    "description": "Keep Statamic in sync with external feeds: JSON, XML, RSS, CSV, APIs and Google Sheets, on a schedule, with dry runs and undo.",
+                    "developer-url": "https://1994.co.uk"
                 }
             },
             "autoload": {
@@ -60,11 +62,7 @@
                     "NineteenNinetyFour\\Ingest\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "NineteenNinetyFour\\Ingest\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
@@ -90,11 +88,12 @@
                 "xml"
             ],
             "support": {
+                "docs": "https://github.com/1994limited/ingest-statamic/tree/main/docs",
                 "email": "hello@1994.co.uk",
-                "source": "https://github.com/1994limited/ingest-statamic/tree/main",
-                "issues": "https://github.com/1994limited/ingest-statamic/issues"
+                "issues": "https://github.com/1994limited/ingest-statamic/issues",
+                "source": "https://github.com/1994limited/ingest-statamic/tree/v1.0.0"
             },
-            "time": "2026-10-18T13:17:41+00:00"
+            "time": "2026-10-18T17:34:33+00:00"
         },
         {
             "name": "ajthinking/archetype",
@@ -13129,9 +13128,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "1994/ingest-statamic": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
