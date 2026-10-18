@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 /**
  * The demo's "feed lab": made-up feeds served from resources/feed-lab (a
- * copy of 1994limited/ingest-statamic-test-data), plus a few endpoints
+ * copy of 1994limited/ingest-test-data), plus a few endpoints
  * that behave like real suppliers and APIs:
  *
  *   /feed-lab/supplier/books?page=2   the supplier catalogue, 10 a page, in
