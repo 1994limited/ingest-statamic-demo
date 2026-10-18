@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "screenshots": "node screenshots.mjs"
+    },
+    "dependencies": {
+        "playwright-core": "^1.48.0"
+    }
+}

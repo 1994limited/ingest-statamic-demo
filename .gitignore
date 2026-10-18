@@ -33,3 +33,5 @@ Thumbs.db
 /scripts/node_modules
 /scripts/screenshots
 /public/vendor/ingest-statamic
+/scripts/node_modules
+/scripts/screenshots

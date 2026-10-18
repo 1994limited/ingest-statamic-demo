@@ -88,6 +88,7 @@ schedule:
   frequency: hourly
   minute: 5
 then_run:
+  - stock_levels
   - staff_picks
 notify:
   stale_after_hours: 26
