@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "034f482f3a2edf60eb5fe6abe681c329",
+    "content-hash": "07721e2ca3af3e4a308da5e1ba85ffec",
     "packages": [
         {
             "name": "1994/ingest-statamic",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/1994limited/ingest-statamic.git",
+                "reference": "b20ad92691514f584d332ab2f5feed0fda0c45b2"
+            },
             "dist": {
-                "type": "path",
-                "url": "../ingest-statamic",
-                "reference": "43149efefe16b93833efa2d9e105911be75dd6d3"
+                "type": "zip",
+                "url": "https://api.github.com/repos/1994limited/ingest-statamic/zipball/b20ad92691514f584d332ab2f5feed0fda0c45b2",
+                "reference": "b20ad92691514f584d332ab2f5feed0fda0c45b2",
+                "shasum": ""
             },
             "require": {
                 "ext-xmlreader": "*",
@@ -34,6 +40,7 @@
             "suggest": {
                 "duncanmcclean/statamic-cargo": "Sync products, variants, prices and stock into Cargo (^1.15)."
             },
+            "default-branch": true,
             "type": "statamic-addon",
             "extra": {
                 "statamic": {
@@ -83,12 +90,11 @@
                 "xml"
             ],
             "support": {
-                "email": "hello@1994.co.uk"
+                "email": "hello@1994.co.uk",
+                "source": "https://github.com/1994limited/ingest-statamic/tree/main",
+                "issues": "https://github.com/1994limited/ingest-statamic/issues"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-18T13:17:41+00:00"
         },
         {
             "name": "ajthinking/archetype",

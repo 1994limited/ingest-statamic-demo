@@ -15,7 +15,7 @@
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
         "statamic/cms": "^6.0",
-        "1994/ingest-statamic": "*@dev"
+        "1994/ingest-statamic": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -102,11 +102,8 @@
     "license": "MIT",
     "repositories": [
         {
-            "type": "path",
-            "url": "../ingest-statamic",
-            "options": {
-                "symlink": true
-            }
+            "type": "vcs",
+            "url": "https://github.com/1994limited/ingest-statamic"
         }
     ]
 }
